@@ -1,0 +1,127 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-rtl.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/vendors/adminlte/css/rtl/style.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <title>Index</title>
+</head>
+
+
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="../../index2.html"><b>בית אריאן </b>לב</a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+            <p class="login-box-msg">התחברות למערכת</p>
+
+            <form id="loginForm">
+                <div class="form-group has-feedback">
+                    <input class="form-control" id="Username" name="Username" type="text" placeholder="הזן מספר תעודת זהות">
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    <input  id="password" name="password" type="password" placeholder="הזן סיסמה" class="form-control">
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+                <div class="row">
+                    <!-- /.col -->
+                    <div class="col-xs-12 pull-right">
+                        <button id="Submit" type="submit" class="btn btn-primary btn-block btn-flat">התחבר</button>
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </form>
+
+        </div>
+        <!-- /.login-box-body -->
+    </div>
+
+</body>
+
+</html>
+
+
+<script>
+    $(document).ready(function () {
+        $('#Username').val("036660157");
+        $('#password').val("1234");
+        jQuery.validator.setDefaults({
+            debug: true,
+            success: "valid"
+        });
+
+        $('#loginForm').validate({
+            rules: {
+                Username: {
+                    required: true
+                },
+                password: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 10
+                }
+            },
+            messages: {
+                Username: {
+                    required: "שדה זה הינו שדה חובה!",
+                },
+                password: {
+                    required: "שדה זה הינו שדה חובה!",
+                    minlength: "הסיסמה חייבת להכיל 3 אותיות לפחות!"
+                }
+            },
+            highlight: function (element) {
+                $(element).closest('.form-group').addClass('has-error');
+
+            },
+            unhighlight: function (element) {
+                $(element).closest('.form-group').removeClass('has-error');
+            },
+            errorElement: 'span',
+            errorClass: 'help-block',
+            errorPlacement: function (error, element) {
+                if (element.parent('.input-group').length) {
+                    error.insertAfter(element.parent());
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+            submitHandler: function (form) {
+
+                var username = $('#Username').val();
+                var pass = $('#password').val();
+                // on success
+                $.ajax({
+                    url: '@Url.Action("formLogin", "Login")',
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        personId: $('#Username').val(),
+                        password: $('#password').val()
+                    },
+                    success: function (result) {
+                        window.location.href = result;
+                    },
+                    error: function (result) {
+                        alert("Failed");
+                    }
+                });
+            }
+
+        })
+    });
+</script>

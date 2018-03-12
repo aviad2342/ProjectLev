@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9b2755903ca049b7bd9cdaf5d019fb0e" Name="Diagram1">
+        <EntityTypeShape EntityType="arivanLevModel.KET_ListsCustomers" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="arivanLevModel.KEY_CustomersTherapists" Width="1.5" PointX="5.25" PointY="6.375" />
+        <EntityTypeShape EntityType="arivanLevModel.KEY_PurchaseItems" Width="1.5" PointX="11" PointY="10.375" />
+        <EntityTypeShape EntityType="arivanLevModel.KEY_Purchases" Width="1.5" PointX="3" PointY="9.25" />
+        <EntityTypeShape EntityType="arivanLevModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="arivanLevModel.TblComment" Width="1.5" PointX="5.25" PointY="13" />
+        <EntityTypeShape EntityType="arivanLevModel.TblCustomer" Width="1.5" PointX="3" PointY="2" />
+        <EntityTypeShape EntityType="arivanLevModel.TblItem" Width="1.5" PointX="8.75" PointY="10.5" />
+        <EntityTypeShape EntityType="arivanLevModel.TblLists" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="arivanLevModel.TblMessage" Width="1.5" PointX="3" PointY="18.25" />
+        <EntityTypeShape EntityType="arivanLevModel.TblPurchase" Width="1.5" PointX="0.75" PointY="12.125" />
+        <EntityTypeShape EntityType="arivanLevModel.TblSession" Width="1.5" PointX="7.5" PointY="5.125" />
+        <EntityTypeShape EntityType="arivanLevModel.TblSubscription" Width="1.5" PointX="11" PointY="13.25" />
+        <EntityTypeShape EntityType="arivanLevModel.TblTherapist" Width="1.5" PointX="3" PointY="6.375" />
+        <EntityTypeShape EntityType="arivanLevModel.TblUser" Width="1.5" PointX="0.75" PointY="7.5" />
+        <EntityTypeShape EntityType="arivanLevModel.TblPhone" Width="1.5" PointX="6" PointY="9.25" />
+        <AssociationConnector Association="arivanLevModel.FK__KEY_Custo__custo__2A4B4B5E" />
+        <AssociationConnector Association="arivanLevModel.FK__KEY_Custo__thera__29572725" />
+        <AssociationConnector Association="arivanLevModel.FK__TblSessio__keyID__2E1BDC42" />
+        <AssociationConnector Association="arivanLevModel.FK__KEY_Purch__itemI__3A81B327" />
+        <AssociationConnector Association="arivanLevModel.FK__KEY_Purch__purch__398D8EEE" />
+        <AssociationConnector Association="arivanLevModel.fk_customer" />
+        <AssociationConnector Association="arivanLevModel.fk_purchase" />
+        <AssociationConnector Association="arivanLevModel.fk_user" />
+        <AssociationConnector Association="arivanLevModel.FK__TblCommen__comme__1BFD2C07" />
+        <AssociationConnector Association="arivanLevModel.FK__TblCommen__messa__1CF15040" />
+        <AssociationConnector Association="arivanLevModel.FK__TblPhone__custom__267ABA7A" />
+        <AssociationConnector Association="arivanLevModel.fk_item" />
+        <AssociationConnector Association="arivanLevModel.FK__TblMessag__recei__1920BF5C" />
+        <AssociationConnector Association="arivanLevModel.FK__TblMessag__sende__182C9B23" />
+        <AssociationConnector Association="arivanLevModel.fk_therapist" />
+        <AssociationConnector Association="arivanLevModel.FK__TblPhone__userID__25869641" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

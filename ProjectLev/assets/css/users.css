@@ -1,0 +1,25 @@
+﻿.btn-add-user {
+    padding: 10px;
+}
+
+.col-sm-6{
+    width: 100% !important;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+.dataTables_filter label{
+    float:right !important;
+    font-size: 0;
+}
+
+.dataTables_filter label::before{
+    content:'חיפוש:' !important;
+    font-size: 16px !important;
+    padding-left: 6px;
+    vertical-align: top;
+}

@@ -1,0 +1,176 @@
+﻿
+
+@section Home{
+
+    <link href="@Url.Content("~/assets/css/home.css")" rel="stylesheet" type="text/css" />
+}
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+
+     <!-- Button trigger modal -->
+      <!--   <button class="btn btn-default btn-lg" data-toggle="modal" data-target="#addUserModal">
+            <i class="fa fa-user"></i>
+            הוספת משתמש חדש
+        </button> --> 
+
+        <!-- Modal -->
+        <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog"
+             aria-labelledby="addUserLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <button type="button" class="close"
+                                data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span>
+                            <span class="sr-only">Close</span>
+                        </button>
+                        <h4 class="modal-title" id="addUserLabel">
+                            <i class="fa fa-user"></i>
+                            טופס הוספת משתמש
+                        </h4>
+                    </div>
+
+                    <!-- Modal Body -->
+                    <div class="modal-body">
+
+                        <form id="registerForm">
+                            <div class="form-group has-feedback">
+                                <input class="form-control" id="userId" name="userId" type="number" placeholder="הזן תעודת זהות">
+                                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                            </div>
+                            <div class="form-group has-feedback">
+                                <input class="form-control" id="userFullname" name="userFullname" type="text" placeholder="הזן שם מלא">
+                                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                            </div>
+                            <div class="form-group has-feedback">
+                                <input class="form-control" id="userEmail" name="userEmail" type="text" placeholder="הזן אימייל">
+                                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                            </div>
+                            <div class="form-group has-feedback">
+                                <input class="form-control" id="userPrivileges" name="userPrivileges" type="text" placeholder="הזן משהו">
+                                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                            </div>
+                            <div class="form-group has-feedback">
+                                <input id="userPassword" name="userPassword" type="password" placeholder="הזן סיסמה" class="form-control">
+                                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                            </div>
+                            <div class="row">
+                                <!-- /.col -->
+                                <div class="col-xs-6 pull-right">
+                                    <button id="Submit" type="submit" class="btn btn-primary btn-block btn-flat">הוסף משתמש</button>
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                        </form>
+
+
+                    </div>
+
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+
+@section scripts {
+
+<script>
+    $(document).ready(function () {
+       jQuery.validator.setDefaults({
+            debug: true,
+            success: "valid"
+        });
+
+        $('#registerForm').validate({
+            rules: {
+                userId: {
+                    required: true
+                },
+                userEmail: {
+                    required: true
+                },
+                userFullname: {
+                    required: true
+                },
+                userPassword: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 10
+                }
+            },
+            messages: {
+                userId: {
+                    required: "שדה זה הינו שדה חובה!",
+                },
+                userEmail: {
+                    required: "שדה זה הינו שדה חובה!",
+                },
+                userFullname: {
+                    required: "שדה זה הינו שדה חובה!",
+                },
+                password: {
+                    required: "שדה זה הינו שדה חובה!",
+                    minlength: "הסיסמה חייבת להכיל 3 אותיות לפחות!"
+                }
+            },
+            highlight: function (element) {
+                $(element).closest('.form-group').addClass('has-error');
+
+            },
+            unhighlight: function (element) {
+                $(element).closest('.form-group').removeClass('has-error');
+            },
+            errorElement: 'span',
+            errorClass: 'help-block',
+            errorPlacement: function (error, element) {
+                if (element.parent('.input-group').length) {
+                    error.insertAfter(element.parent());
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+            submitHandler: function (form) {
+                // on success
+                $.ajax({
+                    url: '@Url.Action("createUser", "Home")',
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        userId: $('#userId').val().toString(),
+                        userFullname: $('#userFullname').val(),
+                        userEmail: $('#userEmail').val(),
+                        userPrivileges: $('#userPrivileges').val(),
+                        userPassword: $('#userPassword').val()
+                    },
+                    success: function (result) {
+                        alert(result)
+                    },
+                    error: function (result) {
+                        alert("Failed");
+                    }
+                });
+            }
+
+        })
+    });
+</script>
+
+}
+

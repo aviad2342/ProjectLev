@@ -1,0 +1,589 @@
+﻿
+
+@section Customer{
+
+    <link href="@Url.Content("~/assets/css/customers.css")" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.2.1/css/buttons.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.2.0/css/select.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.1.0/css/responsive.dataTables.min.css">
+    <link href="~/assets/css/datatables/editor.bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-rtl.css" rel="stylesheet" />
+}
+
+@{
+    ViewBag.Title = "Customer";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+
+
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">טבלת לקוחות</h3>
+            </div>
+
+            <!-- Button trigger modal -->
+            <button id="btnAdd" class="btn btn-default btn-sm" data-toggle="modal" data-target="#addCustomerModal">
+                <i class="fa fa-user"></i>
+                הוספה
+            </button>
+            <button id="btnUpdate" class="btn btn-default btn-sm" data-toggle="modal" data-target="#updateCustomerModal">
+                <i class="fa fa-user"></i>
+                עדכון
+            </button>
+            <button id="btnRemove" class="btn btn-default btn-sm" data-toggle="modal" data-target="#removeCustomerModal">
+                <i class="fa fa-user"></i>
+                מחיקה
+            </button>
+
+            <!-- Data Tabel -->
+            <div class="box-body">
+                <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                    <div class="row"><div class="col-sm-6"></div><div class="col-sm-6"></div></div><div class="row">
+                        <div class="col-sm-12">
+                            <table id="example" class="table table-striped table-bordered dataTable" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>מזהה</th>
+                                        <th>שם מלא</th>
+                                        <th>אימייל</th>
+                                        <th>כתובת</th>
+                                        <th>מיקוד</th>
+                                        <th>מגדר</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>מזהה</th>
+                                        <th>שם מלא</th>
+                                        <th>אימייל</th>
+                                        <th>כתובת</th>
+                                        <th>מיקוד</th>
+                                        <th>מגדר</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-body -->
+        </div>
+    </div>
+</div>
+
+
+<!-- Remove Confirm Modal -->
+<div class="modal fade" id="removeCustomerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                אישור מחיקה
+            </div>
+            <div class="modal-body">
+                האם אתה בטוח שברצונך למחוק רשומה זו?
+            </div>
+            <div class="modal-footer">
+                <button id="btnCancelRemove" type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <a id="btnConfirmRemove" class="btn btn-danger btn-ok">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal add Customer -->
+<div class="modal fade" id="addCustomerModal" tabindex="-1" role="dialog"
+     aria-labelledby="addCustomerLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="addCustomerLabel">
+                    <i class="fa fa-user"></i>
+                    טופס הוספת לקוח
+                </h4>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+
+                <form id="registerForm">
+                    <div class="form-group has-feedback">
+                        <input class="form-control" id="customerId" name="customerId" type="number" placeholder="הכנס תעודת זהות">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input class="form-control" id="customerFullname" name="customerFullname" type="text" placeholder="הכנס שם מלא">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input class="form-control" id="customerEmail" name="customerEmail" type="text" placeholder="הכנס אימייל">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input class="form-control" id="customerCity" name="customerCity" type="text" placeholder="הכנס עיר">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input class="form-control" id="customerStreet" name="customerStreet" type="text" placeholder="הכנס רחוב">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input class="form-control" id="customerHouseNum" name="customerHouseNum" type="number" placeholder="הכנס מספר בית">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input class="form-control" id="customerZipCode" name="customerZipCode" type="text" placeholder="הכנס מיקוד">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input id="customerGender" name="customerGender" type="text" placeholder="הכנס מגדר" class="form-control">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="row">
+                        <!-- /.col -->
+                        <div class="col-xs-6 pull-right">
+                            <button id="Submit" type="submit" class="btn btn-primary btn-block btn-flat">הוסף לקוח</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
+
+
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal update Customer -->
+<div class="modal fade" id="updateCustomerModal" tabindex="-1" role="dialog"
+     aria-labelledby="addCustomerLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="addCustomerLabel">
+                    <i class="fa fa-user"></i>
+                    טופס עדכון משתמש
+                </h4>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+
+                <form id="updateForm">
+                    <div class="form-group has-feedback">
+                        <input class="form-control" id="customerIdU" name="customerIdU" type="number" placeholder="הכנס תעודת זהות">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input class="form-control" id="customerFullnameU" name="customerFullnameU" type="text" placeholder="הכנס שם מלא">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input class="form-control" id="customerEmailU" name="customerEmailU" type="text" placeholder="הכנס אימייל">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input class="form-control" id="customerCityU" name="customerCityU" type="text" placeholder="הכנס עיר">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input class="form-control" id="customerStreetU" name="customerStreetU" type="text" placeholder="הכנס רחוב">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input class="form-control" id="customerHouseNumU" name="customerHouseNumU" type="number" placeholder="הכנס מספר בית">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input class="form-control" id="customerZipCodeU" name="customerZipCodeU" type="text" placeholder="הכנס מיקוד">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input id="customerGenderU" name="customerGenderU" type="text" placeholder="הכנס מגדר" class="form-control">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="row">
+                        <!-- /.col -->
+                        <div class="col-xs-6 pull-right">
+                            <button id="SubmitUpdate" type="submit" class="btn btn-primary btn-block btn-flat">עדכן לקוח</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
+
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button id="btnCloseUpdateForm" type="button" class="btn btn-default"
+                        data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.2.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.2.1/js/buttons.bootstrap.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/select/1.2.0/js/dataTables.select.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js"></script>
+
+    <script>
+
+        var selectedRow;
+        $(document).ready(function () {
+
+            $('#btnUpdate').attr("disabled", true);
+            $('#btnRemove').attr("disabled", true);
+            $('#customerIdU').attr("disabled", true);
+
+
+            var table = $('#example').DataTable({
+                lengthChange: false,
+                responsive: true,
+                ajax: {
+                    "url": "Customer/GetCustomers",
+                    "dataSrc": ""
+                },
+                columns: [
+                    //{
+                    //    data: null, render: function (data, type, row) {
+                    //        // Combine the first and last names into a single table field
+                    //        return data.fullName;
+                    //    }
+                    //},
+                    { data: "ID" },
+                    { data: "fullName" },
+                    { data: "email" },
+                    {
+                           data: null, render: function (data, type, row) {
+                               // Combine the first and last names into a single table field
+                              return data.street+"  "+data.houseNum+" ,"+data.city;
+                           }
+                    },
+                    //{ data: "city" },
+                   // { data: "street" },
+                   // { data: "houseNum" },
+                    { data: "zipCode" },
+                    { data: "gender" }
+                ],
+                select: true
+            });
+
+            // selected row event
+            $('#example tbody').on('click', 'tr', function () {
+                selectedRow = table.row(this).data();
+                isSelectedRow();
+            });
+
+            // chack if a row was selected
+            function isSelectedRow() {
+                if (table.rows({ selected: false }).count() > 0) {
+                    $('#btnUpdate').attr("disabled", true);
+                    $('#btnRemove').attr("disabled", true);
+                }
+
+                if (table.rows({ selected: true }).count() > 0) {
+                    $('#btnUpdate').attr("disabled", false);
+                    $('#btnRemove').attr("disabled", false);
+                }
+            };
+
+            // update selected row event
+            $('#btnUpdate').click(function () {
+                $('#customerIdU').val(selectedRow.ID);
+                $('#customerFullnameU').val(selectedRow.fullName);
+                $('#customerEmailU').val(selectedRow.email);
+                $('#customerCityU').val(selectedRow.city);
+                $('#customerStreetU').val(selectedRow.street);
+                $('#customerHouseNumU').val(selectedRow.houseNum);
+                $('#customerZipCodeU').val(selectedRow.zipCode);
+                $('#customerGenderU').val(selectedRow.gender);
+            });
+
+            /* JQUERY Validations */
+            jQuery.validator.setDefaults({
+                debug: true,
+                success: "valid"
+            });
+
+            // Validations Regex contain only letters and numbers
+            $.validator.addMethod("lNnRegex", function (value, element) {
+                return this.optional(element) || /^([a-zA-Z0-9]+)$/.test(value);
+            }, "Username must contain only letters and numbers");
+
+            // Validations Regex contain at least 1 letter and 1 number
+            $.validator.addMethod("onelnRegex", function (value, element) {
+                return this.optional(element) || /[a-z].*[0-9]|[0-9].*[a-z]/i.test(value);
+            }, "Username must contain at least 1 letter and 1 number");
+
+            //------------------------------------------------------ Modal add Customer -------------------------------------------------
+
+            $('#registerForm').validate({
+                rules: {
+                    customerId: {
+                        required: true,
+                        minlength: 9,
+                        maxlength: 9
+                    },
+                    customerEmail: {
+                        required: true,
+                        email: true
+                    },
+                    customerFullname: {
+                        required: true
+                    },
+                    customerGender: {
+                        required: true
+                    }
+                },
+                messages: {
+                    customerId: {
+                        required: "שדה זה הינו שדה חובה!",
+                    },
+                    customerEmail: {
+                        required: "שדה זה הינו שדה חובה!",
+                    },
+                    customerFullname: {
+                        required: "שדה זה הינו שדה חובה!",
+                    },
+                    customerGender: {
+                        required: "שדה זה הינו שדה חובה!",
+                    }
+                },
+                highlight: function (element) {
+                    $(element).closest('.form-group').addClass('has-error');
+
+                },
+                unhighlight: function (element) {
+                    $(element).closest('.form-group').removeClass('has-error');
+                },
+                errorElement: 'span',
+                errorClass: 'help-block',
+                errorPlacement: function (error, element) {
+                    if (element.parent('.input-group').length) {
+                        error.insertAfter(element.parent());
+                    } else {
+                        error.insertAfter(element);
+                    }
+                },
+                submitHandler: function (form) {
+                    // on success
+                    $.ajax({
+                        url: '@Url.Action("addCustomer", "Customer")',
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            ID: $('#customerId').val(),
+                            customerFullname: $('#customerFullname').val(),
+                            customerEmail: $('#customerEmail').val(),
+                            customerCity: $('#customerCity').val(),
+                            customerStreet: $('#customerStreet').val(),
+                            customerHouseNum: $('#customerHouseNum').val(),
+                            customerZipCode: $('#customerZipCode').val(),
+                            customerGender: $('#customerGender').val()
+                        },
+                        success: function (result) {
+                            if (result != "error") {
+                                $('#addCustomerModal').modal('hide');
+                                table.row.add({
+                                    "ID": result.ID,
+                                    "fullName": result.fullName,
+                                    "email": result.email,
+                                    "city": result.city,
+                                    "street": result.street,
+                                    "houseNum": result.houseNum,
+                                    "zipCode": result.zipCode,
+                                    "gender": result.gender
+                                }).draw();
+                            }
+                        },
+                        error: function (result) {
+                            alert("Failed");
+                        }
+                    });
+                }
+
+            });
+
+            //------------------------------------------------------ update Customer -------------------------------------------------
+
+            $('#updateForm').validate({
+                rules: {
+                    customerIdU: {
+                        required: true,
+                        minlength: 9,
+                        maxlength: 9
+                    },
+                    customerEmailU: {
+                        required: true,
+                        email: true
+                    },
+                    customerFullnameU: {
+                        required: true
+                    },
+                    customerGenderU: {
+                        required: true
+                    }
+                },
+                messages: {
+                    customerIdU: {
+                        required: "שדה זה הינו שדה חובה!",
+                    },
+                    customerEmailU: {
+                        required: "שדה זה הינו שדה חובה!",
+                    },
+                    customerFullnameU: {
+                        required: "שדה זה הינו שדה חובה!",
+                    },
+                    customerGenderU: {
+                        required: "שדה זה הינו שדה חובה!",
+                    }
+                },
+                highlight: function (element) {
+                    $(element).closest('.form-group').addClass('has-error');
+
+                },
+                unhighlight: function (element) {
+                    $(element).closest('.form-group').removeClass('has-error');
+                },
+                errorElement: 'span',
+                errorClass: 'help-block',
+                errorPlacement: function (error, element) {
+                    if (element.parent('.input-group').length) {
+                        error.insertAfter(element.parent());
+                    } else {
+                        error.insertAfter(element);
+                    }
+                },
+                submitHandler: function (form) {
+                    // on success
+                    $.ajax({
+                        url: '@Url.Action("updateCustomer", "Customer")',
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            ID: $('#customerIdU').val(),
+                            customerFullname: $('#customerFullnameU').val(),
+                            customerEmail: $('#customerEmailU').val(),
+                            customerCity: $('#customerCityU').val(),
+                            customerStreet: $('#customerStreetU').val(),
+                            customerHouseNum: $('#customerHouseNumU').val(),
+                            customerZipCode: $('#customerZipCodeU').val(),
+                            customerGender: $('#customerGenderU').val()
+                        },
+                        success: function (result) {
+                            if (result != "error") {
+                                $('#updateCustomerModal').modal('hide');
+                                table.row('.selected').remove().draw();
+
+                                table.row.add({
+                                    "ID": result.ID,
+                                    "fullName": result.fullName,
+                                    "email": result.email,
+                                    "city": result.city,
+                                    "street": result.street,
+                                    "houseNum": result.houseNum,
+                                    "zipCode": result.zipCode,
+                                    "gender": result.gender
+                                }).draw();
+                            }
+
+                            isSelectedRow();
+                        },
+                        error: function (result) {
+                            alert("Failed");
+                        }
+                    });
+                }
+
+            })
+
+            $('#btnCloseUpdateForm').click(function () {
+                table.row('.selected').deselect().draw();
+                isSelectedRow();
+            });
+
+//------------------------------------------------------ remove user -------------------------------------------------
+
+            $('#btnConfirmRemove').click(function () {
+                $.ajax({
+                    url: '@Url.Action("removeCustomer", "Customer")',
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        ID: selectedRow.ID,
+                    },
+                    success: function (result) {
+                        if (result != "error") {
+                            $('#removeCustomerModal').modal('hide');
+                            table
+                                .row('.selected')
+                                .remove()
+                                .draw();
+                        }
+                        isSelectedRow();
+                    },
+                    error: function (result) {
+                        alert("Failed");
+                    }
+                });
+            });
+
+            $('#btnCancelRemove').click(function () {
+                table.row('.selected').deselect().draw();
+                isSelectedRow();
+            });
+
+        });
+
+
+        /*$('#pictureRequest').click(function () {
+            $('#pictureRequest').val("");
+        });
+
+        $('#pictureRequest').change(function () {
+
+            alert($('#pictureRequest').val());
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#pp').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(this.files[0]);
+        });*/
+
+    </script>
+
+}
+
